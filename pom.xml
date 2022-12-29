@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.0.1</version>
+  </parent>
+
+  <groupId>io.ableron.springboot</groupId>
+  <artifactId>ableron-spring-boot</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>ableron-spring-boot</name>
+  <description>Spring Boot Support for Ableron</description>
+  <inceptionYear>2022</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <modules>
+    <module>ableron-library</module>
+    <module>ableron-spring-boot-autoconfigure</module>
+    <module>ableron-spring-boot-starter</module>
+  </modules>
+
+  <properties>
+    <ableron.version>0.0.1-SNAPSHOT</ableron.version>
+    <java.version>17</java.version>
+    <junit-jupiter.version>5.9.1</junit-jupiter.version>
+    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+    <spring-boot.version>3.0.1</spring-boot.version>
+  </properties>
+
+</project>
