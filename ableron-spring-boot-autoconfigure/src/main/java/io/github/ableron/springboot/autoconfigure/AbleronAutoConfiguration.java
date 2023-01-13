@@ -1,17 +1,20 @@
-package io.ableron.springboot.autoconfigure;
+package io.github.ableron.springboot.autoconfigure;
 
-import io.ableron.Ableron;
-import io.ableron.AbleronConfig;
-import io.ableron.AbleronConfigParams;
+import io.github.ableron.Ableron;
+import io.github.ableron.AbleronConfig;
+import io.github.ableron.AbleronConfigParams;
+import io.github.ableron.springboot.filter.UiCompositionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@AutoConfiguration
 @ConditionalOnClass(Ableron.class)
+@ConditionalOnProperty(value = "ableron.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(AbleronProperties.class)
 public class AbleronAutoConfiguration {
 
@@ -30,5 +33,11 @@ public class AbleronAutoConfiguration {
   @ConditionalOnMissingBean
   public Ableron ableron(AbleronConfig ableronConfig) {
     return new Ableron(ableronConfig);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public UiCompositionFilter uiCompositionFilter(Ableron ableron) {
+    return new UiCompositionFilter(ableron);
   }
 }

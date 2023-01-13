@@ -1,4 +1,4 @@
-package io.ableron.springboot.autoconfigure;
+package io.github.ableron.springboot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

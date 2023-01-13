@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.ableron.springboot</groupId>
+    <groupId>io.github.ableron</groupId>
     <artifactId>ableron-spring-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
@@ -22,29 +22,14 @@
       <version>${spring-boot.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.ableron.springboot</groupId>
+      <groupId>io.github.ableron</groupId>
       <artifactId>ableron-spring-boot-autoconfigure</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.ableron</groupId>
-      <artifactId>ableron-library</artifactId>
+      <groupId>io.github.ableron</groupId>
+      <artifactId>ableron</artifactId>
       <version>${ableron.version}</version>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
 </project>

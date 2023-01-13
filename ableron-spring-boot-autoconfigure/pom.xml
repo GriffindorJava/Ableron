@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.ableron.springboot</groupId>
+    <groupId>io.github.ableron</groupId>
     <artifactId>ableron-spring-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
@@ -27,14 +27,18 @@
       <version>${spring-boot.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <version>${spring-boot.version}</version>
-      <optional>true</optional>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.ableron</groupId>
-      <artifactId>ableron-library</artifactId>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.ableron</groupId>
+      <artifactId>ableron</artifactId>
       <version>${ableron.version}</version>
       <optional>true</optional>
     </dependency>
@@ -59,5 +63,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
