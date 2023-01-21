@@ -4,7 +4,6 @@ import io.github.ableron.Ableron;
 import io.github.ableron.AbleronConfig;
 import io.github.ableron.AbleronConfigParams;
 import io.github.ableron.springboot.filter.UiCompositionFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,8 +17,11 @@ import org.springframework.context.annotation.Bean;
 @EnableConfigurationProperties(AbleronProperties.class)
 public class AbleronAutoConfiguration {
 
-  @Autowired
-  private AbleronProperties ableronProperties;
+  private final AbleronProperties ableronProperties;
+
+  public AbleronAutoConfiguration(AbleronProperties ableronProperties) {
+    this.ableronProperties = ableronProperties;
+  }
 
   @Bean
   @ConditionalOnMissingBean
