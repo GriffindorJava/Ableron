@@ -30,7 +30,7 @@ Use fragments in response body
 ```
 
 ## Configuration Options
-* `ableron.enabled`: Whether to enable Ableron UI composition
+* `ableron.enabled`: Whether Ableron UI composition is enabled. Defaults to `true`
 
 ## Library Development
 
