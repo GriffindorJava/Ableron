@@ -5,7 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "ableron")
 public class AbleronProperties {
 
-  private boolean enabled;
+  /**
+   * Whether Ableron UI composition is enabled.
+   */
+  private boolean enabled = true;
 
   public boolean isEnabled() {
     return enabled;
