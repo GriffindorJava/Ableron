@@ -44,6 +44,9 @@ Use fragments in response body
   $ ./mvnw versions:display-dependency-updates
   ```
 
+### Tooling
+* See Artifacts in [nexus repository manager](https://s01.oss.sonatype.org/index.html#nexus-search;gav~io.github.ableron~ableron-spring-boot*~~~)
+
 ### Perform Release
 1. Create new release branch (`git checkout -b release-x.x.x`)
 2. Set release version in `pom.xml`, `ableron-spring-boot-starter/pom.xml` and `ableron-spring-boot-autoconfigure/pom.xml` (remove `-SNAPSHOT`)
@@ -56,3 +59,11 @@ Use fragments in response body
    3. Let GitHub generate the release notes automatically
    4. Publish release
 7. Set artifact version in `main` branch to next `-SNAPSHOT` version via new commit
+
+## Contributing
+Contributions are greatly appreciated. To contribute you can either simply open an issue or fork the repository and create a pull request:
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Added some amazing feature'`)
+4. Push to your branch (`git push origin feature/amazing-feature`)
+5. Open a pull request
