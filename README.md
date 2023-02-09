@@ -13,13 +13,13 @@ Maven:
 <dependency>
   <groupId>io.github.ableron</groupId>
   <artifactId>ableron-spring-boot-starter</artifactId>
-  <version>0.0.2</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 Gradle:
 ```groovy
 dependencies {
-  implementation 'io.github.ableron:ableron-spring-boot-starter:0.0.2'
+  implementation 'io.github.ableron:ableron-spring-boot-starter:1.0.0'
 }
 ```
 
@@ -30,7 +30,10 @@ Use fragments in response body
 ```
 
 ## Configuration Options
-* `ableron.enabled`: Whether Ableron UI composition is enabled. Defaults to `true`
+* `ableron.enabled`: Whether UI composition is enabled. Defaults to `true`
+* `ableron.requestTimeoutMillis`: Timeout for HTTP requests. Defaults to `5 seconds`
+* `ableron.fallbackResponseCacheExpirationTimeMillis`: Duration to cache HTTP responses in case neither `Cache-Control` nor `Expires` header is present. Defaults to `5 minutes`
+* `ableron.maxCacheSizeInBytes`: Maximum size in bytes the response cache may have. Defaults to `10 MB`
 
 ## Library Development
 

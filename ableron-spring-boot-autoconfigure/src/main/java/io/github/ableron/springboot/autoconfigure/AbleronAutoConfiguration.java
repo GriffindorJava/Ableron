@@ -2,8 +2,8 @@ package io.github.ableron.springboot.autoconfigure;
 
 import io.github.ableron.Ableron;
 import io.github.ableron.AbleronConfig;
-import io.github.ableron.AbleronConfigParams;
 import io.github.ableron.springboot.filter.UiCompositionFilter;
+import java.time.Duration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,9 +26,12 @@ public class AbleronAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public AbleronConfig ableronConfig() {
-    AbleronConfig ableronConfig = new AbleronConfig();
-    ableronConfig.put(AbleronConfigParams.ENABLED, ableronProperties.isEnabled());
-    return ableronConfig;
+    return AbleronConfig.builder()
+      .enabled(ableronProperties.isEnabled())
+      .requestTimeout(Duration.ofMillis(ableronProperties.getRequestTimeoutMillis()))
+      .fallbackResponseCacheExpirationTime(Duration.ofMillis(ableronProperties.getFallbackResponseCacheExpirationTimeMillis()))
+      .maxCacheSizeInBytes(ableronProperties.getMaxCacheSizeInBytes())
+      .build();
   }
 
   @Bean

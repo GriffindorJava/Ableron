@@ -45,7 +45,7 @@ public class UiCompositionFilter extends OncePerRequestFilter {
     if (shouldApplyTransclusion(responseWrapper)) {
       String encoding = getResponseBodyCharacterEncoding(responseWrapper);
       String originalResponseBody = new String(responseWrapper.getContentAsByteArray(), encoding);
-      TransclusionResult transclusionResult = ableron.applyTransclusion(originalResponseBody);
+      TransclusionResult transclusionResult = ableron.resolveIncludes(originalResponseBody);
       String processedResponseBody = transclusionResult.getContent();
       responseWrapper.resetBuffer();
       responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
@@ -55,8 +55,8 @@ public class UiCompositionFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Indicates whether transclusion should be applied to the response. This
-   * is {@code true} if all the following conditions are met:
+   * Indicates whether transclusion should be applied to the response. This is {@code true}
+   * if all the following conditions are met:
    * <ul>
    * <li>Response is not committed.</li>
    * <li>Response status code is not in the {@code 1xx} series.</li>
