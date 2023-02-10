@@ -2,7 +2,6 @@
 [![Build Status](https://github.com/ableron/ableron-spring-boot/actions/workflows/main.yml/badge.svg)](https://github.com/ableron/ableron-spring-boot/actions/workflows/main.yml)
 [![License](https://img.shields.io/github/license/ableron/ableron-spring-boot)](https://github.com/ableron/ableron-spring-boot/blob/main/LICENSE)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.ableron/ableron-spring-boot/badge.svg)](https://mvnrepository.com/artifact/io.github.ableron/ableron-spring-boot)
-[![GitHub Release](https://img.shields.io/github/v/release/ableron/ableron-spring-boot.svg)](https://github.com/ableron/ableron-spring-boot/releases)
 [![Java Version](https://img.shields.io/badge/Java-17+-4EB1BA.svg)](https://docs.oracle.com/en/java/javase/17/)
 
 Spring Boot Support for Ableron Server Side UI Composition
