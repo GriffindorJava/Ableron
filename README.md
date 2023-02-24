@@ -4,7 +4,9 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.ableron/ableron-spring-boot/badge.svg)](https://mvnrepository.com/artifact/io.github.ableron/ableron-spring-boot)
 [![Java Version](https://img.shields.io/badge/Java-17+-4EB1BA.svg)](https://docs.oracle.com/en/java/javase/17/)
 
-Spring Boot Support for Ableron Server Side UI Composition
+**Spring Boot Support for Ableron Server Side UI Composition**
+1. Spring Boot 3.x project，please use ableron-spring-boot-starter 3.x
+1. Spring Boot 2.x project，please use ableron-spring-boot-starter 2.x
 
 ## Installation
 Maven:
