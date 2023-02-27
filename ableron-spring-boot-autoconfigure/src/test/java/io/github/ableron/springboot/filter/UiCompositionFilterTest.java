@@ -62,7 +62,7 @@ public class UiCompositionFilterTest {
   @Test
   public void shouldNotApplyUiCompositionIfContentTypeIsNotTextHtml() throws ServletException, IOException {
     // given
-    var ableron = new Ableron(AbleronConfig.builder().enabled(false).build());
+    var ableron = new Ableron(AbleronConfig.builder().build());
     var uiCompositionFilter = new UiCompositionFilter(ableron);
     var request = new MockHttpServletRequest();
     var response = new MockHttpServletResponse();
