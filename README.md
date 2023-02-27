@@ -14,13 +14,13 @@ Maven:
 <dependency>
   <groupId>io.github.ableron</groupId>
   <artifactId>ableron-spring-boot-starter</artifactId>
-  <version>1.0.0</version>
+  <version>3.0.0</version>
 </dependency>
 ```
 Gradle:
 ```groovy
 dependencies {
-  implementation 'io.github.ableron:ableron-spring-boot-starter:1.0.0'
+  implementation 'io.github.ableron:ableron-spring-boot-starter:3.0.0'
 }
 ```
 
@@ -63,6 +63,7 @@ Use fragments in response body
    3. Let GitHub generate the release notes automatically
    4. Publish release
 7. Set artifact version in `main` branch to next `-SNAPSHOT` version via new commit
+8. Apply changes to `2.x` branch as well, if sensible
 
 ## Contributing
 Contributions are greatly appreciated. To contribute you can either simply open an issue or fork the repository and create a pull request:
