@@ -6,14 +6,15 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class UiCompositionFilter extends OncePerRequestFilter {
 
@@ -48,7 +49,12 @@ public class UiCompositionFilter extends OncePerRequestFilter {
       TransclusionResult transclusionResult = ableron.resolveIncludes(originalResponseBody);
       String processedResponseBody = transclusionResult.getContent();
       responseWrapper.resetBuffer();
-      responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
+
+      if (processedResponseBody.isEmpty()) {
+        responseWrapper.getResponse().setContentLength(0);
+      } else {
+        responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
+      }
     }
 
     responseWrapper.copyBodyToResponse();

@@ -11,6 +11,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -39,6 +40,7 @@ public class UiCompositionFilterTest {
 
     // then
     assertEquals("fallback", response.getContentAsString());
+    assertEquals(8, response.getHeaderValue(HttpHeaders.CONTENT_LENGTH));
   }
 
   @Test
@@ -77,6 +79,25 @@ public class UiCompositionFilterTest {
     assertEquals("<ableron-include src=\"foo\">fallback</ableron-include>", response.getContentAsString());
   }
 
+  @Test
+  public void shouldSetContentLengthHeaderToZeroForEmptyResponse() throws ServletException, IOException {
+    // given
+    var ableron = new Ableron(AbleronConfig.builder().build());
+    var uiCompositionFilter = new UiCompositionFilter(ableron);
+    var request = new MockHttpServletRequest();
+    var response = new MockHttpServletResponse();
+    var filterChain = new MockFilterChain(mock(HttpServlet.class), uiCompositionFilter, new OutputGeneratingFilter(
+      "<ableron-include />"
+    ));
+
+    // when
+    filterChain.doFilter(request, response);
+
+    // then
+    assertEquals("", response.getContentAsString());
+    assertEquals(0, response.getHeaderValue(HttpHeaders.CONTENT_LENGTH));
+  }
+
   static class OutputGeneratingFilter implements Filter {
 
     private final String content;
@@ -95,6 +116,7 @@ public class UiCompositionFilterTest {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException {
       servletResponse.setContentType(contentType);
       servletResponse.getOutputStream().print(content);
+      servletResponse.setContentLength(content.length());
     }
   }
 }
