@@ -43,6 +43,10 @@ Use fragments in response body
   ```console
   $ ./mvnw versions:display-dependency-updates
   ```
+* Update maven wrapper to newer version
+   ```console
+   $ ./mvnw wrapper:wrapper -Dmaven=<version, e.g. 3.9.0>
+   ```
 
 ### Tooling
 * See Artifacts in [nexus repository manager](https://s01.oss.sonatype.org/index.html#nexus-search;gav~io.github.ableron~ableron-spring-boot*~~~)
