@@ -29,7 +29,7 @@ Use fragments in response body
 ## Configuration Options
 * `ableron.enabled`: Whether UI composition is enabled. Defaults to `true`
 * `ableron.requestTimeoutMillis`: Timeout for HTTP requests. Defaults to `5 seconds`
-* `ableron.fallbackResponseCacheExpirationTimeMillis`: Duration to cache HTTP responses in case neither `Cache-Control` nor `Expires` header is present. Defaults to `5 minutes`
+* `ableron.defaultResponseCacheDurationMillis`: Duration to cache HTTP responses in case neither `Cache-Control` nor `Expires` header is present. Defaults to `5 minutes`
 * `ableron.maxCacheSizeInBytes`: Maximum size in bytes the response cache may have. Defaults to `10 MB`
 
 ## Library Development

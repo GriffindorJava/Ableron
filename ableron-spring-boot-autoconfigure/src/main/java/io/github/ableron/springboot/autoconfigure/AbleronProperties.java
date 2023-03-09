@@ -26,7 +26,7 @@ public class AbleronProperties {
    *
    * Defaults to 5 minutes.
    */
-  private long fallbackResponseCacheExpirationTimeMillis = 5000;
+  private long defaultResponseCacheDurationMillis = 5000;
 
   /**
    * Maximum size in bytes the response cache may have.
@@ -51,12 +51,12 @@ public class AbleronProperties {
     this.requestTimeoutMillis = requestTimeoutMillis;
   }
 
-  public long getFallbackResponseCacheExpirationTimeMillis() {
-    return fallbackResponseCacheExpirationTimeMillis;
+  public long getDefaultResponseCacheDurationMillis() {
+    return defaultResponseCacheDurationMillis;
   }
 
-  public void setFallbackResponseCacheExpirationTimeMillis(long fallbackResponseCacheExpirationTimeMillis) {
-    this.fallbackResponseCacheExpirationTimeMillis = fallbackResponseCacheExpirationTimeMillis;
+  public void setDefaultResponseCacheDurationMillis(long defaultResponseCacheDurationMillis) {
+    this.defaultResponseCacheDurationMillis = defaultResponseCacheDurationMillis;
   }
 
   public long getMaxCacheSizeInBytes() {

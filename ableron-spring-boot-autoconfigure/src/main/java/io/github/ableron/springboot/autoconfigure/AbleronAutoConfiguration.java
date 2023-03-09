@@ -32,7 +32,7 @@ public class AbleronAutoConfiguration {
     return AbleronConfig.builder()
       .enabled(ableronProperties.isEnabled())
       .requestTimeout(Duration.ofMillis(ableronProperties.getRequestTimeoutMillis()))
-      .fallbackResponseCacheExpirationTime(Duration.ofMillis(ableronProperties.getFallbackResponseCacheExpirationTimeMillis()))
+      .defaultResponseCacheDuration(Duration.ofMillis(ableronProperties.getDefaultResponseCacheDurationMillis()))
       .maxCacheSizeInBytes(ableronProperties.getMaxCacheSizeInBytes())
       .build();
   }
