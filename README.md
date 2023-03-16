@@ -21,9 +21,9 @@ implementation 'io.github.ableron:ableron-spring-boot-starter:3.0.3'
 ```
 
 ## Usage
-Use fragments in response body
+Use includes in response body
 ```html
-<fragment src="https://your-fragment-url" />
+<ableron-include src="https://your-fragment-url" />
 ```
 
 ## Configuration Options
