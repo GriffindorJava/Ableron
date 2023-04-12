@@ -31,9 +31,10 @@ public class AbleronAutoConfiguration {
   public AbleronConfig ableronConfig() {
     return AbleronConfig.builder()
       .enabled(ableronProperties.isEnabled())
-      .requestTimeout(Duration.ofMillis(ableronProperties.getRequestTimeoutMillis()))
-      .defaultResponseCacheDuration(Duration.ofMillis(ableronProperties.getDefaultResponseCacheDurationMillis()))
-      .maxCacheSizeInBytes(ableronProperties.getMaxCacheSizeInBytes())
+      .fragmentRequestTimeout(Duration.ofMillis(ableronProperties.getFragmentRequestTimeoutMillis()))
+      .fragmentDefaultCacheDuration(Duration.ofMillis(ableronProperties.getFragmentDefaultCacheDurationMillis()))
+      .fragmentRequestHeadersToPass(ableronProperties.getFragmentRequestHeadersToPass())
+      .cacheMaxSizeInBytes(ableronProperties.getCacheMaxSizeInBytes())
       .build();
   }
 

@@ -7,6 +7,13 @@
 1. Spring Boot 2.x project: Please use ableron-spring-boot-starter 2.x (Java 11+, spring-webmvc only)
 
 ## Installation
+Add dependency [io.github.ableron:ableron-spring-boot-starter](https://mvnrepository.com/artifact/io.github.ableron/ableron-spring-boot-starter) to your project.
+
+Gradle:
+```groovy
+implementation 'io.github.ableron:ableron-spring-boot-starter:3.0.3'
+```
+
 Maven:
 ```xml
 <dependency>
@@ -14,10 +21,6 @@ Maven:
   <artifactId>ableron-spring-boot-starter</artifactId>
   <version>3.0.3</version>
 </dependency>
-```
-Gradle:
-```groovy
-implementation 'io.github.ableron:ableron-spring-boot-starter:3.0.3'
 ```
 
 ## Usage
@@ -28,9 +31,21 @@ Use includes in response body
 
 ## Configuration Options
 * `ableron.enabled`: Whether UI composition is enabled. Defaults to `true`
-* `ableron.requestTimeoutMillis`: Timeout for HTTP requests. Defaults to `5 seconds`
-* `ableron.defaultResponseCacheDurationMillis`: Duration to cache HTTP responses in case neither `Cache-Control` nor `Expires` header is present. Defaults to `5 minutes`
-* `ableron.maxCacheSizeInBytes`: Maximum size in bytes the response cache may have. Defaults to `10 MB`
+* `ableron.fragment-request-timeout-millis`: Timeout for requesting fragments. Defaults to `3 seconds`
+* `ableron.fragment-default-cache-duration-millis`: Duration to cache fragments in case neither `Cache-Control` nor `Expires` header is present. Defaults to `5 minutes`
+* `ableron.fragment-request-headers-to-pass`: Request headers that are passed to fragment requests if present. Defaults to:
+  * `Accept-Language`
+  * `Correlation-ID`
+  * `Forwarded`
+  * `Referer`
+  * `User-Agent`
+  * `X-Correlation-ID`
+  * `X-Forwarded-For`
+  * `X-Forwarded-Proto`
+  * `X-Forwarded-Host`
+  * `X-Real-IP`
+  * `X-Request-ID`
+* `ableron.cache-max-size-in-bytes`: Maximum size in bytes the fragment cache may have. Defaults to `10 MB`
 
 ## Library Development
 

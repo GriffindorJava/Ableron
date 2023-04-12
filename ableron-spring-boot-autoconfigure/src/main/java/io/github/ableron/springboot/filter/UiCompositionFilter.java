@@ -14,7 +14,8 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UiCompositionFilter extends OncePerRequestFilter {
 
@@ -35,26 +36,16 @@ public class UiCompositionFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, responseToUse);
 
     if (!isAsyncStarted(request)) {
-      handleResponse(responseToUse);
+      handleResponse(request, responseToUse);
     }
   }
 
-  private void handleResponse(HttpServletResponse response) throws IOException {
+  private void handleResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ContentCachingResponseWrapper responseWrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper.class);
     Assert.notNull(responseWrapper, "ContentCachingResponseWrapper not found");
 
     if (shouldApplyTransclusion(responseWrapper)) {
-      String encoding = getResponseBodyCharacterEncoding(responseWrapper);
-      String originalResponseBody = new String(responseWrapper.getContentAsByteArray(), encoding);
-      TransclusionResult transclusionResult = ableron.resolveIncludes(originalResponseBody);
-      String processedResponseBody = transclusionResult.getContent();
-      responseWrapper.resetBuffer();
-
-      if (processedResponseBody.isEmpty()) {
-        responseWrapper.getResponse().setContentLength(0);
-      } else {
-        responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
-      }
+      applyTransclusion(request, responseWrapper);
     }
 
     responseWrapper.copyBodyToResponse();
@@ -73,7 +64,7 @@ public class UiCompositionFilter extends OncePerRequestFilter {
    * @param response The HTTP response
    * @return {@code true} if transclusion should be applied to the given response, {@code false} otherwise
    */
-  protected boolean shouldApplyTransclusion(HttpServletResponse response) {
+  private boolean shouldApplyTransclusion(HttpServletResponse response) {
     HttpStatus.Series responseStatusCodeSeries = HttpStatus.Series.resolve(response.getStatus());
 
     return !response.isCommitted()
@@ -83,7 +74,34 @@ public class UiCompositionFilter extends OncePerRequestFilter {
       && response.getContentType().toLowerCase().startsWith(MediaType.TEXT_HTML_VALUE);
   }
 
-  protected String getResponseBodyCharacterEncoding(ContentCachingResponseWrapper responseWrapper) {
-    return Optional.ofNullable(responseWrapper.getCharacterEncoding()).orElse(WebUtils.DEFAULT_CHARACTER_ENCODING);
+  /**
+   * @param responseWrapper The wrapped HTTP response
+   */
+  private void applyTransclusion(HttpServletRequest request, ContentCachingResponseWrapper responseWrapper) throws IOException {
+    String encoding = getResponseBodyCharacterEncoding(responseWrapper);
+    String originalResponseBody = new String(responseWrapper.getContentAsByteArray(), encoding);
+    TransclusionResult transclusionResult = ableron.resolveIncludes(originalResponseBody, getRequestHeaders(request));
+    String processedResponseBody = transclusionResult.getContent();
+    responseWrapper.resetBuffer();
+
+    if (processedResponseBody.isEmpty()) {
+      responseWrapper.getResponse().setContentLength(0);
+    } else {
+      responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
+    }
+  }
+
+  private Map<String, List<String>> getRequestHeaders(HttpServletRequest request) {
+    return Collections.list(request.getHeaderNames())
+      .stream()
+      .collect(Collectors.toMap(
+        headerName -> headerName,
+        headerName -> Collections.list(request.getHeaders(headerName))
+      ));
+  }
+
+  private String getResponseBodyCharacterEncoding(HttpServletResponse response) {
+    return Optional.ofNullable(response.getCharacterEncoding())
+      .orElse(WebUtils.DEFAULT_CHARACTER_ENCODING);
   }
 }

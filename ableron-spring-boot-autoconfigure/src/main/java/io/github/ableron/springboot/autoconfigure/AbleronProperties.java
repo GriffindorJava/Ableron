@@ -1,39 +1,55 @@
 package io.github.ableron.springboot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.unit.DataSize;
+
+import java.time.Duration;
+import java.util.List;
 
 @ConfigurationProperties(prefix = "ableron")
 public class AbleronProperties {
 
   /**
    * Whether Ableron UI composition is enabled.
-   *
    * Defaults to true.
    */
   private boolean enabled = true;
 
   /**
-   * Maximum duration to wait for a successful and complete response of an include source
-   * or fallback URL.
-   *
-   * Defaults to 5 seconds.
+   * Timeout for requesting fragments.
+   * Defaults to 3 seconds.
    */
-  private long requestTimeoutMillis = 5000;
+  private long fragmentRequestTimeoutMillis = Duration.ofSeconds(3).toMillis();
 
   /**
-   * Duration to cache HTTP responses in case there is no caching information provided
+   * Duration to cache fragments in case no caching information is provided
    * along the response, i.e. neither Cache-Control nor Expires header.
-   *
    * Defaults to 5 minutes.
    */
-  private long defaultResponseCacheDurationMillis = 5000;
+  private long fragmentDefaultCacheDurationMillis = Duration.ofMinutes(5).toMillis();
 
   /**
-   * Maximum size in bytes the response cache may have.
-   *
+   * Request headers that are passed to fragment requests if present.
+   */
+  private List<String> fragmentRequestHeadersToPass = List.of(
+    "Accept-Language",
+    "Correlation-ID",
+    "Forwarded",
+    "Referer",
+    "User-Agent",
+    "X-Correlation-ID",
+    "X-Forwarded-For",
+    "X-Forwarded-Proto",
+    "X-Forwarded-Host",
+    "X-Real-IP",
+    "X-Request-ID"
+  );
+
+  /**
+   * Maximum size in bytes the fragment cache may have.
    * Defaults to 10 MB.
    */
-  private long maxCacheSizeInBytes = 1024 * 1024 * 10;
+  private long cacheMaxSizeInBytes = DataSize.ofMegabytes(10).toBytes();
 
   public boolean isEnabled() {
     return enabled;
@@ -43,27 +59,35 @@ public class AbleronProperties {
     this.enabled = enabled;
   }
 
-  public long getRequestTimeoutMillis() {
-    return requestTimeoutMillis;
+  public long getFragmentRequestTimeoutMillis() {
+    return fragmentRequestTimeoutMillis;
   }
 
-  public void setRequestTimeoutMillis(long requestTimeoutMillis) {
-    this.requestTimeoutMillis = requestTimeoutMillis;
+  public void setFragmentRequestTimeoutMillis(long fragmentRequestTimeoutMillis) {
+    this.fragmentRequestTimeoutMillis = fragmentRequestTimeoutMillis;
   }
 
-  public long getDefaultResponseCacheDurationMillis() {
-    return defaultResponseCacheDurationMillis;
+  public long getFragmentDefaultCacheDurationMillis() {
+    return fragmentDefaultCacheDurationMillis;
   }
 
-  public void setDefaultResponseCacheDurationMillis(long defaultResponseCacheDurationMillis) {
-    this.defaultResponseCacheDurationMillis = defaultResponseCacheDurationMillis;
+  public void setFragmentDefaultCacheDurationMillis(long fragmentDefaultCacheDurationMillis) {
+    this.fragmentDefaultCacheDurationMillis = fragmentDefaultCacheDurationMillis;
   }
 
-  public long getMaxCacheSizeInBytes() {
-    return maxCacheSizeInBytes;
+  public List<String> getFragmentRequestHeadersToPass() {
+    return fragmentRequestHeadersToPass;
   }
 
-  public void setMaxCacheSizeInBytes(long maxCacheSizeInBytes) {
-    this.maxCacheSizeInBytes = maxCacheSizeInBytes;
+  public void setFragmentRequestHeadersToPass(List<String> fragmentRequestHeadersToPass) {
+    this.fragmentRequestHeadersToPass = fragmentRequestHeadersToPass;
+  }
+
+  public long getCacheMaxSizeInBytes() {
+    return cacheMaxSizeInBytes;
+  }
+
+  public void setCacheMaxSizeInBytes(long cacheMaxSizeInBytes) {
+    this.cacheMaxSizeInBytes = cacheMaxSizeInBytes;
   }
 }
