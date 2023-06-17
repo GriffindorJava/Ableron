@@ -45,6 +45,10 @@ Use includes in response body
   * `X-Forwarded-Host`
   * `X-Real-IP`
   * `X-Request-ID`
+* `ableron.primary-fragment-response-headers-to-pass`: Response headers of primary fragments to pass to the page response if present. Defaults to:
+  * `Content-Language`
+  * `Location`
+  * `Refresh`
 * `ableron.cache-max-size-in-bytes`: Maximum size in bytes the fragment cache may have. Defaults to `10 MB`
 
 ## Library Development

@@ -34,6 +34,7 @@ public class AbleronAutoConfiguration {
       .fragmentRequestTimeout(Duration.ofMillis(ableronProperties.getFragmentRequestTimeoutMillis()))
       .fragmentDefaultCacheDuration(Duration.ofMillis(ableronProperties.getFragmentDefaultCacheDurationMillis()))
       .fragmentRequestHeadersToPass(ableronProperties.getFragmentRequestHeadersToPass())
+      .primaryFragmentResponseHeadersToPass(ableronProperties.getPrimaryFragmentResponseHeadersToPass())
       .cacheMaxSizeInBytes(ableronProperties.getCacheMaxSizeInBytes())
       .build();
   }

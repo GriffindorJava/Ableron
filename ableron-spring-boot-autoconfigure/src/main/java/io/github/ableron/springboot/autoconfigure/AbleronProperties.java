@@ -46,6 +46,15 @@ public class AbleronProperties {
   );
 
   /**
+   * Response headers of primary fragments to pass to the page response if present.
+   */
+  private List<String> primaryFragmentResponseHeadersToPass = List.of(
+    "Content-Language",
+    "Location",
+    "Refresh"
+  );
+
+  /**
    * Maximum size in bytes the fragment cache may have.
    * Defaults to 10 MB.
    */
@@ -81,6 +90,14 @@ public class AbleronProperties {
 
   public void setFragmentRequestHeadersToPass(List<String> fragmentRequestHeadersToPass) {
     this.fragmentRequestHeadersToPass = fragmentRequestHeadersToPass;
+  }
+
+  public List<String> getPrimaryFragmentResponseHeadersToPass() {
+    return primaryFragmentResponseHeadersToPass;
+  }
+
+  public void setPrimaryFragmentResponseHeadersToPass(List<String> primaryFragmentResponseHeadersToPass) {
+    this.primaryFragmentResponseHeadersToPass = primaryFragmentResponseHeadersToPass;
   }
 
   public long getCacheMaxSizeInBytes() {
