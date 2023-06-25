@@ -32,7 +32,6 @@ Use includes in response body
 ## Configuration Options
 * `ableron.enabled`: Whether UI composition is enabled. Defaults to `true`
 * `ableron.fragment-request-timeout-millis`: Timeout for requesting fragments. Defaults to `3 seconds`
-* `ableron.fragment-default-cache-duration-millis`: Duration to cache fragments in case neither `Cache-Control` nor `Expires` header is present. Defaults to `5 minutes`
 * `ableron.fragment-request-headers-to-pass`: Request headers that are passed to fragment requests if present. Defaults to:
   * `Accept-Language`
   * `Correlation-ID`
