@@ -66,6 +66,21 @@
     <module>ableron-spring-boot-starter</module>
   </modules>
 
+  <repositories>
+    <repository>
+      <id>ossrh-snapshots</id>
+      <name>ossrh-snapshots</name>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+  </repositories>
+
   <properties>
     <ableron.version>1.2.0</ableron.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
