@@ -1,11 +1,13 @@
 package io.github.ableron.springboot.filter;
 
 import io.github.ableron.Ableron;
+import io.github.ableron.HttpUtil;
 import io.github.ableron.TransclusionResult;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
@@ -14,6 +16,8 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -102,6 +106,18 @@ public class UiCompositionFilter extends OncePerRequestFilter {
         }
       });
     }
+
+    transclusionResult.getContentExpirationTime().ifPresent(contentExpirationTime -> {
+      if (contentExpirationTime.isBefore(Instant.now())) {
+        responseWrapper.setHeader(HttpHeaders.CACHE_CONTROL, "no-store");
+      } else if (contentExpirationTime.isBefore(getInitialPageExpirationTime((HttpServletResponse) responseWrapper.getResponse()))) {
+        responseWrapper.setHeader(HttpHeaders.CACHE_CONTROL, "max-age=" + ChronoUnit.SECONDS.between(Instant.now(), contentExpirationTime));
+      }
+    });
+  }
+
+  private Instant getInitialPageExpirationTime(HttpServletResponse response) {
+    return HttpUtil.calculateResponseExpirationTime(getResponseHeaders(response));
   }
 
   private Map<String, List<String>> getRequestHeaders(HttpServletRequest request) {
@@ -110,6 +126,15 @@ public class UiCompositionFilter extends OncePerRequestFilter {
       .collect(Collectors.toMap(
         headerName -> headerName,
         headerName -> Collections.list(request.getHeaders(headerName))
+      ));
+  }
+
+  private Map<String, List<String>> getResponseHeaders(HttpServletResponse response) {
+    return response.getHeaderNames()
+      .stream()
+      .collect(Collectors.toMap(
+        headerName -> headerName,
+        headerName -> new ArrayList<>(response.getHeaders(headerName))
       ));
   }
 

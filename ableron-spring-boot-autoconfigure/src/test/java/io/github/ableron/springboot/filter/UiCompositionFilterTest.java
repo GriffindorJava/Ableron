@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
@@ -122,6 +123,84 @@ public class UiCompositionFilterTest {
     // then
     assertEquals(503, response.getStatus());
     assertEquals("en", response.getHeaderValue(HttpHeaders.CONTENT_LANGUAGE));
+  }
+
+  @Test
+  public void shouldReducePageExpirationTimeBasedOnNonCacheableFragment() throws ServletException, IOException {
+    // given
+    var transclusionResult = new TransclusionResult("");
+    transclusionResult.addResolvedInclude(
+      new Include(Map.of()),
+      new Fragment(200, "content", Instant.EPOCH, Map.of())
+    );
+    var ableron = Mockito.mock(Ableron.class);
+    Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);
+    var uiCompositionFilter = new UiCompositionFilter(ableron);
+    var request = new MockHttpServletRequest();
+    var response = new MockHttpServletResponse();
+    response.addHeader(HttpHeaders.CACHE_CONTROL, "max-age=600");
+    var filterChain = new MockFilterChain(mock(HttpServlet.class), uiCompositionFilter, new OutputGeneratingFilter(
+      "<ableron-include src=\"foo\"/>"
+    ));
+
+    // when
+    filterChain.doFilter(request, response);
+
+    // then
+    assertEquals(200, response.getStatus());
+    assertEquals("no-store", response.getHeaderValue(HttpHeaders.CACHE_CONTROL));
+  }
+
+  @Test
+  public void shouldReducePageExpirationTimeBasedOnFragmentWithLowerExpirationTime() throws ServletException, IOException {
+    // given
+    var transclusionResult = new TransclusionResult("");
+    transclusionResult.addResolvedInclude(
+      new Include(Map.of()),
+      new Fragment(200, "content", Instant.now().plusSeconds(300), Map.of())
+    );
+    var ableron = Mockito.mock(Ableron.class);
+    Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);
+    var uiCompositionFilter = new UiCompositionFilter(ableron);
+    var request = new MockHttpServletRequest();
+    var response = new MockHttpServletResponse();
+    response.addHeader(HttpHeaders.CACHE_CONTROL, "max-age=600");
+    var filterChain = new MockFilterChain(mock(HttpServlet.class), uiCompositionFilter, new OutputGeneratingFilter(
+      "<ableron-include src=\"foo\"/>"
+    ));
+
+    // when
+    filterChain.doFilter(request, response);
+
+    // then
+    assertEquals(200, response.getStatus());
+    assertTrue(((String) response.getHeaderValue(HttpHeaders.CACHE_CONTROL)).matches("max-age=(298|299|300)"));
+  }
+
+  @Test
+  public void shouldNotReducePageExpirationTimeIfLowerThanFragmentExpirationTime() throws ServletException, IOException {
+    // given
+    var transclusionResult = new TransclusionResult("");
+    transclusionResult.addResolvedInclude(
+      new Include(Map.of()),
+      new Fragment(200, "content", Instant.now().plusSeconds(900), Map.of())
+    );
+    var ableron = Mockito.mock(Ableron.class);
+    Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);
+    var uiCompositionFilter = new UiCompositionFilter(ableron);
+    var request = new MockHttpServletRequest();
+    var response = new MockHttpServletResponse();
+    response.addHeader(HttpHeaders.CACHE_CONTROL, "max-age=600");
+    var filterChain = new MockFilterChain(mock(HttpServlet.class), uiCompositionFilter, new OutputGeneratingFilter(
+      "<ableron-include src=\"foo\"/>"
+    ));
+
+    // when
+    filterChain.doFilter(request, response);
+
+    // then
+    assertEquals(200, response.getStatus());
+    assertTrue(((String) response.getHeaderValue(HttpHeaders.CACHE_CONTROL)).matches("max-age=(598|599|600)"));
   }
 
   static class OutputGeneratingFilter implements Filter {
