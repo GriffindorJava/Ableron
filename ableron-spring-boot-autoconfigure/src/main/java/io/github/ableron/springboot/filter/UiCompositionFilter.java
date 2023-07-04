@@ -1,7 +1,6 @@
 package io.github.ableron.springboot.filter;
 
 import io.github.ableron.Ableron;
-import io.github.ableron.HttpUtil;
 import io.github.ableron.TransclusionResult;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,8 +15,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,39 +82,25 @@ public class UiCompositionFilter extends OncePerRequestFilter {
     String encoding = getResponseBodyCharacterEncoding(responseWrapper);
     String originalResponseBody = new String(responseWrapper.getContentAsByteArray(), encoding);
     TransclusionResult transclusionResult = ableron.resolveIncludes(originalResponseBody, getRequestHeaders(request));
-    String processedResponseBody = transclusionResult.getContent();
     responseWrapper.resetBuffer();
 
-    if (processedResponseBody.isEmpty()) {
+    if (transclusionResult.getContent().isEmpty()) {
       responseWrapper.getResponse().setContentLength(0);
     } else {
-      responseWrapper.getOutputStream().write(processedResponseBody.getBytes(encoding));
+      responseWrapper.getOutputStream().write(transclusionResult.getContent().getBytes(encoding));
     }
 
-    if (transclusionResult.hasPrimaryInclude()) {
-      transclusionResult.getPrimaryIncludeStatusCode().ifPresent(responseWrapper::setStatus);
-      transclusionResult.getPrimaryIncludeResponseHeaders().forEach((name, values) -> {
-        for (int i = 0; i < values.size(); i++) {
-          if (i == 0) {
-            responseWrapper.setHeader(name, values.get(i));
-          } else {
-            responseWrapper.addHeader(name, values.get(i));
-          }
+    transclusionResult.getStatusCodeOverride().ifPresent(responseWrapper::setStatus);
+    transclusionResult.getResponseHeadersToPass().forEach((name, values) -> {
+      for (int i = 0; i < values.size(); i++) {
+        if (i == 0) {
+          responseWrapper.setHeader(name, values.get(i));
+        } else {
+          responseWrapper.addHeader(name, values.get(i));
         }
-      });
-    }
-
-    transclusionResult.getContentExpirationTime().ifPresent(contentExpirationTime -> {
-      if (contentExpirationTime.isBefore(Instant.now())) {
-        responseWrapper.setHeader(HttpHeaders.CACHE_CONTROL, "no-store");
-      } else if (contentExpirationTime.isBefore(getInitialPageExpirationTime((HttpServletResponse) responseWrapper.getResponse()))) {
-        responseWrapper.setHeader(HttpHeaders.CACHE_CONTROL, "max-age=" + ChronoUnit.SECONDS.between(Instant.now(), contentExpirationTime));
       }
     });
-  }
-
-  private Instant getInitialPageExpirationTime(HttpServletResponse response) {
-    return HttpUtil.calculateResponseExpirationTime(getResponseHeaders(response));
+    responseWrapper.setHeader(HttpHeaders.CACHE_CONTROL, transclusionResult.calculateCacheControlHeaderValue(getResponseHeaders((HttpServletResponse) responseWrapper.getResponse())));
   }
 
   private Map<String, List<String>> getRequestHeaders(HttpServletRequest request) {
