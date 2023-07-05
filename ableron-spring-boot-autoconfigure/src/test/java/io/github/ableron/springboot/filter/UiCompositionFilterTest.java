@@ -174,7 +174,7 @@ public class UiCompositionFilterTest {
 
     // then
     assertEquals(200, response.getStatus());
-    assertTrue(((String) response.getHeaderValue(HttpHeaders.CACHE_CONTROL)).matches("max-age=(298|299|300)"));
+    assertEquals("max-age=300", response.getHeaderValue(HttpHeaders.CACHE_CONTROL));
   }
 
   @Test
@@ -200,7 +200,7 @@ public class UiCompositionFilterTest {
 
     // then
     assertEquals(200, response.getStatus());
-    assertTrue(((String) response.getHeaderValue(HttpHeaders.CACHE_CONTROL)).matches("max-age=(598|599|600)"));
+    assertEquals("max-age=600", response.getHeaderValue(HttpHeaders.CACHE_CONTROL));
   }
 
   static class OutputGeneratingFilter implements Filter {
