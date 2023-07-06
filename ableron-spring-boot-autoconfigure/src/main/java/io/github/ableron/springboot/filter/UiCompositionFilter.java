@@ -106,6 +106,7 @@ public class UiCompositionFilter extends OncePerRequestFilter {
   private Map<String, List<String>> getRequestHeaders(HttpServletRequest request) {
     return Collections.list(request.getHeaderNames())
       .stream()
+      .distinct()
       .collect(Collectors.toMap(
         headerName -> headerName,
         headerName -> Collections.list(request.getHeaders(headerName))
@@ -115,6 +116,7 @@ public class UiCompositionFilter extends OncePerRequestFilter {
   private Map<String, List<String>> getResponseHeaders(HttpServletResponse response) {
     return response.getHeaderNames()
       .stream()
+      .distinct()
       .collect(Collectors.toMap(
         headerName -> headerName,
         headerName -> new ArrayList<>(response.getHeaders(headerName))
