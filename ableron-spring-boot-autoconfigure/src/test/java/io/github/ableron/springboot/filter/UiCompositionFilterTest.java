@@ -105,7 +105,8 @@ public class UiCompositionFilterTest {
     var transclusionResult = new TransclusionResult("");
     transclusionResult.addResolvedInclude(
       new Include(Map.of("primary", "")),
-      new Fragment(503, "content", Instant.EPOCH, Map.of(HttpHeaders.CONTENT_LANGUAGE, List.of("en")))
+      new Fragment(null, 503, "content", Instant.EPOCH, Map.of(HttpHeaders.CONTENT_LANGUAGE, List.of("en"))),
+      0
     );
     var ableron = Mockito.mock(Ableron.class);
     Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);
@@ -130,7 +131,8 @@ public class UiCompositionFilterTest {
     var transclusionResult = new TransclusionResult("");
     transclusionResult.addResolvedInclude(
       new Include(Map.of()),
-      new Fragment(200, "content", Instant.EPOCH, Map.of())
+      new Fragment(null, 200, "content", Instant.EPOCH, Map.of()),
+      0
     );
     var ableron = Mockito.mock(Ableron.class);
     Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);
@@ -156,7 +158,8 @@ public class UiCompositionFilterTest {
     var transclusionResult = new TransclusionResult("");
     transclusionResult.addResolvedInclude(
       new Include(Map.of()),
-      new Fragment(200, "content", Instant.now().plusSeconds(300), Map.of())
+      new Fragment(null, 200, "content", Instant.now().plusSeconds(300), Map.of()),
+      0
     );
     var ableron = Mockito.mock(Ableron.class);
     Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);
@@ -182,7 +185,8 @@ public class UiCompositionFilterTest {
     var transclusionResult = new TransclusionResult("");
     transclusionResult.addResolvedInclude(
       new Include(Map.of()),
-      new Fragment(200, "content", Instant.now().plusSeconds(900), Map.of())
+      new Fragment(null, 200, "content", Instant.now().plusSeconds(900), Map.of()),
+      0
     );
     var ableron = Mockito.mock(Ableron.class);
     Mockito.when(ableron.resolveIncludes(any(), any())).thenReturn(transclusionResult);

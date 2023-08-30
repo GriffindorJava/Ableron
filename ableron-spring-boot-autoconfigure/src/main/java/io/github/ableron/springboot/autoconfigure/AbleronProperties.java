@@ -11,13 +11,11 @@ public class AbleronProperties {
 
   /**
    * Whether Ableron UI composition is enabled.
-   * Defaults to true.
    */
   private boolean enabled = true;
 
   /**
    * Timeout for requesting fragments.
-   * Defaults to 3 seconds.
    */
   private long fragmentRequestTimeoutMillis = Duration.ofSeconds(3).toMillis();
 
@@ -49,9 +47,13 @@ public class AbleronProperties {
 
   /**
    * Maximum size in bytes the fragment cache may have.
-   * Defaults to 10 MB.
    */
   private long cacheMaxSizeInBytes = DataSize.ofMegabytes(10).toBytes();
+
+  /**
+   * Whether to append UI composition stats as HTML comment to the content.
+   */
+  private boolean statsAppendToContent = false;
 
   public boolean isEnabled() {
     return enabled;
@@ -91,5 +93,13 @@ public class AbleronProperties {
 
   public void setCacheMaxSizeInBytes(long cacheMaxSizeInBytes) {
     this.cacheMaxSizeInBytes = cacheMaxSizeInBytes;
+  }
+
+  public boolean isStatsAppendToContent() {
+    return statsAppendToContent;
+  }
+
+  public void setStatsAppendToContent(boolean statsAppendToContent) {
+    this.statsAppendToContent = statsAppendToContent;
   }
 }

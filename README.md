@@ -48,7 +48,8 @@ Use includes in response body
   * `Content-Language`
   * `Location`
   * `Refresh`
-* `ableron.cache-max-size-in-bytes`: Maximum size in bytes the fragment cache may have. Defaults to `10 MB`
+* `ableron.cache.max-size-in-bytes`: Maximum size in bytes the fragment cache may have. Defaults to `10 MB`
+* `ableron.stats.append-to-content`: Whether to append UI composition stats as HTML comment to the content. Defaults to `false`
 
 ## Contributing
 Contributions are greatly appreciated. To contribute you can either simply open an issue or fork the repository and create a pull request:
