@@ -11,7 +11,7 @@ Add dependency [io.github.ableron:ableron-spring-boot-starter](https://mvnreposi
 
 Gradle:
 ```groovy
-implementation 'io.github.ableron:ableron-spring-boot-starter:3.3.0'
+implementation 'io.github.ableron:ableron-spring-boot-starter:3.4.0'
 ```
 
 Maven:
@@ -19,7 +19,7 @@ Maven:
 <dependency>
   <groupId>io.github.ableron</groupId>
   <artifactId>ableron-spring-boot-starter</artifactId>
-  <version>3.3.0</version>
+  <version>3.4.0</version>
 </dependency>
 ```
 
@@ -52,12 +52,5 @@ Use includes in response body
 * `ableron.stats.append-to-content`: Whether to append UI composition stats as HTML comment to the content. Defaults to `false`
 
 ## Contributing
-Contributions are greatly appreciated. To contribute you can either simply open an issue or fork the repository and create a pull request:
-1. Fork this repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Added some amazing feature'`)
-4. Push to your branch (`git push origin feature/amazing-feature`)
-5. Open a pull request
-
-## Library Development
-See [DEVELOPMENT.md](./DEVELOPMENT.md) for details regarding development of this library.
+Contributions are greatly appreciated.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details regarding contributing and development of this library.

@@ -12,7 +12,7 @@
 
   <groupId>io.github.ableron</groupId>
   <artifactId>ableron-spring-boot</artifactId>
-  <version>3.3.1-SNAPSHOT</version>
+  <version>3.4.0</version>
   <packaging>pom</packaging>
 
   <name>ableron-spring-boot</name>
@@ -82,7 +82,7 @@
   </repositories>
 
   <properties>
-    <ableron.version>1.4.0</ableron.version>
+    <ableron.version>1.5.0</ableron.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
