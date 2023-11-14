@@ -49,6 +49,7 @@ Use includes in response body
   * `Location`
   * `Refresh`
 * `ableron.cache.max-size-in-bytes`: Maximum size in bytes the fragment cache may have. Defaults to `10 MB`
+* `ableron.cache.vary-by-request-headers`: Fragment request headers which influence the requested fragment aside from its URL. Used to create fragment cache keys. Defaults to an empty list. Must be a subset of `ableron.fragment-request-headers-to-pass`. Common example are headers used for steering A/B-tests
 * `ableron.stats.append-to-content`: Whether to append UI composition stats as HTML comment to the content. Defaults to `false`
 
 ## Contributing

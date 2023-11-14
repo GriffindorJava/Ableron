@@ -51,6 +51,11 @@ public class AbleronProperties {
   private long cacheMaxSizeInBytes = DataSize.ofMegabytes(10).toBytes();
 
   /**
+   * Fragment request headers which influence the requested fragment aside from its URL.
+   */
+  private List<String> cacheVaryByRequestHeaders = List.of();
+
+  /**
    * Whether to append UI composition stats as HTML comment to the content.
    */
   private boolean statsAppendToContent = false;
@@ -93,6 +98,14 @@ public class AbleronProperties {
 
   public void setCacheMaxSizeInBytes(long cacheMaxSizeInBytes) {
     this.cacheMaxSizeInBytes = cacheMaxSizeInBytes;
+  }
+
+  public List<String> getCacheVaryByRequestHeaders() {
+    return cacheVaryByRequestHeaders;
+  }
+
+  public void setCacheVaryByRequestHeaders(List<String> cacheVaryByRequestHeaders) {
+    this.cacheVaryByRequestHeaders = cacheVaryByRequestHeaders;
   }
 
   public boolean isStatsAppendToContent() {
