@@ -11,7 +11,7 @@ Add dependency [io.github.ableron:ableron-spring-boot-starter](https://mvnreposi
 
 Gradle:
 ```groovy
-implementation 'io.github.ableron:ableron-spring-boot-starter:3.4.0'
+implementation 'io.github.ableron:ableron-spring-boot-starter:3.5.0'
 ```
 
 Maven:
@@ -19,7 +19,7 @@ Maven:
 <dependency>
   <groupId>io.github.ableron</groupId>
   <artifactId>ableron-spring-boot-starter</artifactId>
-  <version>3.4.0</version>
+  <version>3.5.0</version>
 </dependency>
 ```
 
